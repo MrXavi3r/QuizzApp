@@ -1,4 +1,4 @@
-const questions = [{
+let questions = [{
         name: "What century was Picasso born in?",
         answers: ["18th", "20th", "19th", "17th"],
         correctAnswer: "19th"
@@ -51,7 +51,7 @@ const questions = [{
 ]
 
 let counter = 0;
-function generateHTML() {
+function generateQuiz() {
     let question = questions[counter];
     
     return 
@@ -72,7 +72,7 @@ function generateHTML() {
                     </ul>
                 </form>
             </section>
-            <span class="question-marker"><h5>question ${} of 10</h5></span>
+            <span class="question-marker"><h5>question ${questions[i]} of 10</h5></span>
         </main>
     </div>
 </div>`
@@ -91,6 +91,6 @@ function renderPage() {
 
 
 
-export default questions
-export default generateHTML()
+export default questions;
+export default generateQuiz()
 export default renderPage()
