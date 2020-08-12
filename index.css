@@ -19,6 +19,39 @@ html, .body {
     background-image: url(./img/Adam.jpg);
 }
 
+/* the class for the image is the question number */
+.one {
+    background-image: url(./img/Picasso.png);
+}
+.two{
+    background-image: url(./img/Sistine.png);
+}
+.three{
+    background-image: url(./img/Lastsupper2.png);
+}
+.four{
+    background-image: url(./img/Renaissance.png);
+}
+.five{
+    background-image: url(./img/Inferno.png);
+}
+.six{
+    background-image: url(./img/Warhol.png);
+}
+.seven{
+    background-image: url(./img/Basquiat.png);
+}
+.eight{
+    background-image: url(./img/Frieda.png);
+}
+.nine{
+    background-image: url(./img/Starry.png);
+}
+.ten{
+    background-image: url(./img/Raven.jpg);
+}
+
+
 .border-rule {
     border: 2px #6395ec solid;
     margin: 10px auto;
