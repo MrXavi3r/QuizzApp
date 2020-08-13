@@ -10,9 +10,21 @@ html, .body {
     width: 100%;
 }
 
+body {
+    background-image: url(./img/background.jpg);
+    background-size: 20%;
+    background-repeat: unset;
+}
+
+h1 {
+    color: #6395ec;
+}
+
 .content {
     width: 600px;
     height: 600px;
+    background-color: #ffffff99;
+    padding: 0 25px;
 }
 
 .adam {
@@ -20,41 +32,42 @@ html, .body {
 }
 
 /* the class for the image is the question number */
-.one {
+.bg1 {
     background-image: url(./img/Picasso.png);
 }
-.two{
+.bg2{
     background-image: url(./img/Sistine.png);
 }
-.three{
+.bg3{
     background-image: url(./img/Lastsupper2.png);
 }
-.four{
+.bg4{
     background-image: url(./img/Renaissance.png);
 }
-.five{
+.bg5{
     background-image: url(./img/Inferno.png);
 }
-.six{
+.bg6{
     background-image: url(./img/Warhol.png);
 }
-.seven{
+.bg7{
     background-image: url(./img/Basquiat.png);
 }
-.eight{
+.bg8{
     background-image: url(./img/Frieda.png);
 }
-.nine{
+.bg9{
     background-image: url(./img/Starry.png);
 }
-.ten{
+.bg10{
     background-image: url(./img/Raven.jpg);
 }
 
-
 .border-rule {
-    border: 2px #6395ec solid;
+    border: 10px #6395ec solid;
+    padding: 10px;
     margin: 10px auto;
+    background-size: cover;
 }
 
 .start-button {
@@ -68,6 +81,17 @@ html, .body {
     width: 250px;
     height: 80px;
     padding: 0px;
+}
+
+.quiz-page h3{
+    text-shadow: 0px 0px 1px #000;
+    font-size: 20px;
+}
+
+.question-marker {
+    text-shadow: 0px 0px 1px #000;
+    font-size: 14px;
+    text-transform: uppercase;
 }
 
 .go-back-btn {
@@ -94,25 +118,38 @@ html, .body {
 
 .answers li {
     font-size: 25px;
-    background: #cce5ff;
+    background-color: #6395ec;
     margin: 10px;
     border-radius: 15px;
     line-height: 35px;
     width: 200px;
 }
 
-.answers li a {
-    text-decoration: none;
+.answers li input {
+    opacity: 0;
+    position: absolute;
+}
+
+.answers li label {
+    display: block;
+    font-size: 18px;
+    padding: 5px 8px;
+    line-height: 20px;
+    color: white;
 }
 
 /* li lights up green for click on correct answer */
 .correct {
-    background-color: green;
+    background-color: green !important;
 }
 
 /* li lights up red for click on incorrect answer */
 .incorrect {
-    background-color: red;
+    background-color: red !important;
+}
+
+.correct label, .incorrect label {
+    color: white !important;
 }
 
 @media screen and (max-width: 800px) {
