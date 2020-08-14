@@ -221,7 +221,7 @@ function checkResult() {
 
 //completely resets the page to HOME or startpage after quiz completion and clicking the button to do so
 function startOver() {
-    window.location = '/';
+    window.location = '/QuizApp';
 }
 
 
