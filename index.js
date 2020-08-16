@@ -157,7 +157,9 @@ function startQuiz(page) {
     let answer4 = `<li><input id="answer4" type="radio" name="choice" value="${question.answers[3]}"></input><label for="answer4">${question.answers[3]}</label></li>`;
     let questionName = `<h3 class="question">${question.name}</h3>`;
     let marker = `<span class="question-marker"><h5>question ${STORE.currentQuestion} of ${STORE.questions.length}</h5></span>`;
+    let scorer = `<span class="current-score"><h5>current score: ${STORE.score}</h5></span>`;
     let correctAnswer = `<div class="ca" style="display: none" data-answer="${question.correctAnswer}"></div>`;
+
 
     // adds the necessary html to page(via declared variables above) and adds background images to each their respective questions
     // adds the 4 possible answer choices for each questions
@@ -166,6 +168,7 @@ function startQuiz(page) {
     $('main .content').prepend(questionName);
     $('main .answers').append(answer1 + answer2 + answer3 + answer4);
     $('main .content').append(marker);
+    $('main .content').append(scorer);
     $('main .quiz').append(correctAnswer);
     checkAnswer();
 }
@@ -180,25 +183,25 @@ function startQuiz(page) {
 //this was very difficult to pull off, as I had to change from buttons to inputs, and then hide the radios and style the button labels to appear large enough with CSS to make them click!
 //once the .length of the store of questions has been reached, the checkResult function runs
 function checkAnswer() {
-    $('.answers li input').change(function(){
+    $('.answers li input').change(function () {
         let correctAnswer = $('.ca').data('answer')
         let userAnswer = $(this).val()
-        if(correctAnswer === userAnswer){
+        if (correctAnswer === userAnswer) {
             $(this).parents('li').addClass('correct');
             $('.answers li input').prop('disabled', true);
             STORE.score++
-            setTimeout(function(){
-                if(STORE.currentQuestion === STORE.questions.length) {
+            setTimeout(function () {
+                if (STORE.currentQuestion === STORE.questions.length) {
                     checkResult();
                 } else {
                     startQuiz(quizPage)
                 }
             }, 2000)
-        }else{
+        } else {
             $(this).parents('li').addClass('incorrect');
             $('.answers li input').prop('disabled', true);
-            setTimeout(function(){
-                if(STORE.currentQuestion === STORE.questions.length) {
+            setTimeout(function () {
+                if (STORE.currentQuestion === STORE.questions.length) {
                     checkResult();
                 } else {
                     startQuiz(quizPage)
@@ -212,7 +215,7 @@ function checkAnswer() {
 //if a users chooses 7 or more correct, then quiz will render pass page, if not, a fail page
 function checkResult() {
     let score = STORE.score;
-    if(score >= 7) {
+    if (score >= 7) {
         renderPage(passPage);
     } else {
         renderPage(failPage);
@@ -221,7 +224,7 @@ function checkResult() {
 
 //completely resets the page to HOME or startpage after quiz completion and clicking the button to do so
 function startOver() {
-    window.location = '/QuizApp';
+    window.location = '/QuizzApp';
 }
 
 
