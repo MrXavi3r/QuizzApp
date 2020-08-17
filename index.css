@@ -16,15 +16,21 @@ body {
     background-repeat: unset;
 }
 
-h1 {
+.title {
+    background-color: #e5e5e5;
     color: #6395ec;
+    padding: 4px 12px;
+}
+
+.pass-fail {
+    color: black;
 }
 
 .content {
     width: 600px;
     height: 600px;
     background-color: #ffffff99;
-    padding: 0 25px;
+    padding: 0 24px;
 }
 
 .adam {
@@ -67,12 +73,12 @@ h1 {
     border: 10px #6395ec solid;
     padding: 10px;
     margin: 10px auto;
-    background-size: contain;
+    background-size: cover;
 }
 
 .start-button {
-    background-color: #e395ab;
-    color: #6395ec;
+    background-color: #6395ec;
+    color: white;
     font-size: 60px;
     text-transform: uppercase;
     align-items: center;
@@ -95,12 +101,30 @@ h1 {
 }
 
 .current-score {
-    color: #6395ec;
+    font-size: 20px;
+    color: red;
+    text-transform: uppercase;
+}
+
+.final-score {
+    color: red;
+    text-transform: uppercase;
+    font-size: 40px;
+}
+
+#pass-page {
+    background-image: url(./img/party.webp);
+    background-size: cover;
+}
+
+#fail-page {
+    background-image: url(./img/banksy-sad.jpg);
+    background-size: cover;
 }
 
 .go-back-btn {
-    background-color: #e395ab;
-    color: #6395ec;
+    background-color: #6395ec;
+    color: white;
     font-size: 25px;
     text-transform: uppercase;
     align-items: center;
@@ -111,7 +135,15 @@ h1 {
     padding: 0px;
 }
 
-.start-button:hover, .go-back-btn:hover {
+.refresh-btn {
+    background-color: #4caf50;
+    color: white;
+    padding: 4px 8px;
+    border: 0;
+    border-radius: 4px;
+}
+
+.start-button:hover, .go-back-btn:hover, .answers li label:hover, .refresh-btn:hover {
     cursor: pointer;
 }
 
@@ -154,6 +186,10 @@ h1 {
 
 .correct label, .incorrect label {
     color: white !important;
+}
+
+.content p {
+    font-size: 40px;
 }
 
 @media screen and (max-width: 800px) {
