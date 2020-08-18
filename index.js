@@ -136,21 +136,30 @@ function checkAnswer() {
 }
 
 //keyboard functionality for up and down keys and enter 
-function keypress() {
-    $('.form').onkeydown = function(e) {
-        switch(e.which) {
-
-            case 38: // up
+    $(document).on('keydown', function (e) {
+        e.preventDefault();
+        // console.log(e.which)
+        var arrow = {up: 38, down: 40};
+      
+        let inputs = $('[name=choice]');
+        switch (e.which) {
+            
+          case arrow.up:
             break;
 
-            case 40: // down
+          case arrow.down:
+
+
+          //if theres a checked radio, find next one(to find next, know current)
+          //if theres no currently checked radio, check first one           
+          //use find method on LI to find input and check it  
+          // 
+            if($('[name=choice]:checked')[0]){
+                console.log(inputs.indexOf(($('[name=choice]:checked')[0])))
+              }
             break;
-    
-            default: return; // exit this handler for other keys
         }
-        e.preventDefault(); // prevent the default action (scroll / move caret)
-    };
-}
+      });
 
 //if a users chooses 7 or more correct, then quiz will render pass page, if not, a fail page
 function checkResult() {
