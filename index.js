@@ -21,10 +21,13 @@ let quizPage = `<div class="container quiz-page">
     </header>
     <div class="border-rule">
         <div class="content">
+        <div class="feedback"><p></p></div>
             <section class="quiz">
                 <form class="form">
-                    <ul class="answers">
-                    </ul>
+                        <div class="answers">
+                        </div>
+                        <button class="submit-btn" type="submit">SUBMIT</button>
+                        <button class="next-btn" type="button">NEXT</button>
                 </form>
             </section>
         </div>
@@ -40,7 +43,7 @@ function passPage(score) {
         <h4 class="final-score">final score: ${score}</h4>
         <p>You're an art aficionado</p>
         <span>
-            <button onclick="startOver()" class="go-back-btn">Back to Start</button>
+            <button onclick="startOver()" class="go-back-btn" type="reset">Back to Start</button>
         </span>
     </div>
 </div>
@@ -56,7 +59,7 @@ function failPage(score) {
         <h4 class="final-score">final score: ${score}</h4>
         <p>Better luck next time</p>
         <span>
-            <button onclick="startOver()" class="go-back-btn">Try Again</button>
+            <button onclick="startOver()" class="go-back-btn" type="reset">Try Again</button>
         </span>
     </div>
 </div>`;
@@ -75,14 +78,14 @@ function startQuiz(page) {
 
     // these variables hold HTML to be rendered within the quiz page for each given question
     let question = STORE.questions[i];
-    let answer1 = `<li><input id="answer1" type="radio" name="choice" value="${question.answers[0]}"></input><label for="answer1">${question.answers[0]}</label></li>`;
-    let answer2 = `<li><input id="answer2" type="radio" name="choice" value="${question.answers[1]}"></input><label for="answer2">${question.answers[1]}</label></li>`;
-    let answer3 = `<li><input id="answer3" type="radio" name="choice" value="${question.answers[2]}"></input><label for="answer3">${question.answers[2]}</label></li>`;
-    let answer4 = `<li><input id="answer4" type="radio" name="choice" value="${question.answers[3]}"></input><label for="answer4">${question.answers[3]}</label></li>`;
+    let answer1 = `<input id="answer1" type="radio" name="choice" tabindex="1" value="${question.answers[0]}"/><label for="answer1">${question.answers[0]}</label>`;
+    let answer2 = `<input id="answer2" type="radio" name="choice" tabindex="2" value="${question.answers[1]}"/><label for="answer2">${question.answers[1]}</label>`;
+    let answer3 = `<input id="answer3" type="radio" name="choice" tabindex="3" value="${question.answers[2]}"/><label for="answer3">${question.answers[2]}</label>`;
+    let answer4 = `<input id="answer4" type="radio" name="choice" tabindex="4" value="${question.answers[3]}"/><label for="answer4">${question.answers[3]}</label>`;
     let questionName = `<h3 class="question">${question.name}</h3>`;
     let marker = `<span class="question-marker"><h5>question ${STORE.currentQuestion} of ${STORE.questions.length}</h5></span>`;
     let scorer = `<div class="current-score"><h5>score: ${STORE.score}</h5></div>`;
-    let refresh = `<span><button class="refresh-btn" onclick="startOver()">Restart Quiz</button></span>`;
+    let refresh = `<span><button class="refresh-btn" onClick="startOver()">Restart Quiz</button></span>`;
     let correctAnswer = `<div class="ca" style="display: none" data-answer="${question.correctAnswer}"></div>`;
 
     // adds the necessary html to page(via declared variables above) and adds background images to each their respective questions
@@ -96,6 +99,7 @@ function startQuiz(page) {
     $("main .content").append(refresh);
     $("main .quiz").append(correctAnswer);
     checkAnswer();
+    nextQuestion();
 }
 
 // logic for checking for right and wrong answers
@@ -106,34 +110,67 @@ function startQuiz(page) {
 // also, once a user chooses an answer choice from the list, they may no longer click on any other choice because the other buttons will become disabled
 //this was very difficult to pull off, as I had to change from buttons to inputs, and then hide the radios and style the button labels to appear large enough with CSS to make them click!
 //once the .length of the store of questions has been reached, the checkResult function runs
+// function checkAnswer() {
+//     $(".answers input").change(function () {
+//         let correctAnswer = $(".ca").data("answer");
+//         let userAnswer = $(this).val();
+//         $('.form').on('click', '.submit-btn', (e)=> {
+//             e.preventDefault();
+//             if (correctAnswer === userAnswer) {
+//             $(this).parents("li").addClass("correct");
+//             $('.feedback p').addClass("correct");
+//             $(".answers input").prop("disabled", true);
+//             STORE.score++;
+//                 if (STORE.currentQuestion === STORE.questions.length) {
+//                     checkResult();
+//                 } else {
+//                     startQuiz(quizPage);
+//                 };
+//         } else {
+//             $(this).parents("li").addClass("incorrect");
+//             $(".answers li input").prop("disabled", true);
+//                 if (STORE.currentQuestion === STORE.questions.length) {
+//                     checkResult();
+//                 } else {
+//                     startQuiz(quizPage);
+//                 };
+//         }
+//     })
+//     });
+// }
+
 function checkAnswer() {
-    $(".answers li input").change(function () {
+    $(".answers input").change(function () {
         let correctAnswer = $(".ca").data("answer");
         let userAnswer = $(this).val();
-        if (correctAnswer === userAnswer) {
-            $(this).parents("li").addClass("correct");
-            $(".answers li input").prop("disabled", true);
-            STORE.score++;
-            setTimeout(function () {
-                if (STORE.currentQuestion === STORE.questions.length) {
-                    checkResult();
-                } else {
-                    startQuiz(quizPage);
-                }
-            }, 2000);
-        } else {
-            $(this).parents("li").addClass("incorrect");
-            $(".answers li input").prop("disabled", true);
-            setTimeout(function () {
-                if (STORE.currentQuestion === STORE.questions.length) {
-                    checkResult();
-                } else {
-                    startQuiz(quizPage);
-                }
-            }, 2000);
-        }
+        $('.content').on('click', '.submit-btn', (event) => {
+            event.preventDefault();
+            if (correctAnswer === userAnswer) {
+                STORE.score++;
+                $('.feedback p').addClass("correct");
+                $(".answers input").prop("disabled", true);
+            } else {
+                $('.feedback p').addClass("incorrect");
+                $(".answers input").prop("disabled", true);
+            };
+        });
+
     });
+    
 }
+
+//move to next question 
+function nextQuestion(){
+    $('.content').on('click', '.next-btn', () => {
+        if ($('.answers input').prop("disabled", true) && STORE.currentQuestion === STORE.questions.length) {
+            checkResult();
+        }else if($('.answers input').prop("disabled", true)){
+        startQuiz(quizPage);
+        }
+    })
+}
+        
+    
 
 //keyboard functionality for up and down keys and enter 
     $(document).on('keydown', function (e) {
@@ -173,7 +210,9 @@ function checkResult() {
 
 //completely resets the page to HOME or startpage after quiz completion and clicking the button to do so
 function startOver() {
-    window.location = "/QuizzApp";
+        STORE.score = 0;
+        STORE.currentQuestion = 0;
+        renderPage(startPage);
 }
 
 //i still have yet to implement the html rendering for the scoring system so users can see their final score, ran short on time to do that

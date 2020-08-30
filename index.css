@@ -143,6 +143,14 @@ body {
     border-radius: 4px;
 }
 
+.submit-btn {
+    background-color: #6395ec;
+    color: #fff;
+    padding: 4px 8px;
+    border: 0;
+    border-radius: 4px;
+}
+
 .start-button:hover, .go-back-btn:hover, .answers li label:hover, .refresh-btn:hover {
     cursor: pointer;
 }
@@ -175,13 +183,17 @@ body {
 }
 
 /* li lights up green for click on correct answer */
-.correct {
-    background-color: green !important;
+.correct:before {
+    background-color: #4caf50 !important;
+    color: white;
+    content: 'CORRECT!';
 }
 
 /* li lights up red for click on incorrect answer */
-.incorrect {
+.incorrect:before {
     background-color: red !important;
+    content: 'INCORRECT';
+    color: white;
 }
 
 .correct label, .incorrect label {
@@ -190,6 +202,18 @@ body {
 
 .content p {
     font-size: 40px;
+}
+
+.feedback p {
+    margin: 0;
+}
+
+.next-btn {
+    background-color: #6395ec;
+    color: #fff;
+    padding: 4px 8px;
+    border: 0;
+    border-radius: 4px;
 }
 
 @media screen and (max-width: 800px) {
