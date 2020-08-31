@@ -151,6 +151,10 @@ body {
     border-radius: 4px;
 }
 
+.submit-btn:focus, .next-btn:focus, .refresh-btn:focus {
+    border: #ff3378 3px dotted;
+}
+
 .start-button:hover, .go-back-btn:hover, .answers li label:hover, .refresh-btn:hover {
     cursor: pointer;
 }
@@ -208,10 +212,6 @@ body {
     background-color: #ff3378 !important;
 }
 
-.focus {
-    background-color: darkblue !important;
-}
-
 .feedback p {
     margin: 0;
 }
@@ -227,10 +227,6 @@ body {
 fieldset {
     border: none;
 }
-
-/* fieldset:focus {
-    border: 2px dotted #ff3378;
-} */
 
 @media screen and (max-width: 800px) {
     .content {

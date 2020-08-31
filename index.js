@@ -70,6 +70,13 @@ function renderPage(page) {
     $("main").html(page);
 }
 
+function startBtnClick(){
+    $('.start-button').click(function(event){
+        event.preventDefault();
+        startQuiz(quizPage);
+    });
+}
+
 // starts the quiz
 //when quiz starts the currentQuestion increments from 0 to 1 to begin
 function startQuiz(page) {
@@ -104,43 +111,6 @@ function startQuiz(page) {
     answersFocus();
 }
 
-// logic for checking for right and wrong answers
-// listens for when an answer li element has been changed,
-//a class will be added to the element on click, triggering the event
-//if thr click is the correct choice, the list item will highlight green for 2 seconds and then move on to next question
-//if user clicks on wrong answer, then it will highlight red for 2 seconds and then move on
-// also, once a user chooses an answer choice from the list, they may no longer click on any other choice because the other buttons will become disabled
-//this was very difficult to pull off, as I had to change from buttons to inputs, and then hide the radios and style the button labels to appear large enough with CSS to make them click!
-//once the .length of the store of questions has been reached, the checkResult function runs
-// function checkAnswer() {
-//     $(".answers input").change(function () {
-//         let correctAnswer = $(".ca").data("answer");
-//         let userAnswer = $(this).val();
-//         $('.form').on('click', '.submit-btn', (e)=> {
-//             e.preventDefault();
-//             if (correctAnswer === userAnswer) {
-//             $(this).parents("li").addClass("correct");
-//             $('.feedback p').addClass("correct");
-//             $(".answers input").prop("disabled", true);
-//             STORE.score++;
-//                 if (STORE.currentQuestion === STORE.questions.length) {
-//                     checkResult();
-//                 } else {
-//                     startQuiz(quizPage);
-//                 };
-//         } else {
-//             $(this).parents("li").addClass("incorrect");
-//             $(".answers li input").prop("disabled", true);
-//                 if (STORE.currentQuestion === STORE.questions.length) {
-//                     checkResult();
-//                 } else {
-//                     startQuiz(quizPage);
-//                 };
-//         }
-//     })
-//     });
-// }
-
 function checkAnswer() {
         $('.content').on('click', '.submit-btn', (event) => {
             event.preventDefault();
@@ -158,7 +128,7 @@ function checkAnswer() {
         });    
 }
 
-//move to next question 
+//move to next question on next button click, after submit button has been clicked
 function nextQuestion(){
     $('.content').on('click', '.next-btn', () => {
         if ($('.answers input').prop("disabled", true) && STORE.currentQuestion === STORE.questions.length) {
@@ -169,21 +139,14 @@ function nextQuestion(){
     })
 }
 
-
+// adds a 'checked' class to elements that are checked, highlighting them pink
 function answersFocus() {
     $('input[type=radio][name=choice]').focus(function() {
-        console.log($('input[type=radio][name=choice]:checked'))
         if(!$('input[type=radio][name=choice]:checked').length){
         $(this).parent().addClass('checked')
         $(this).attr('checked', true)
         } 
     })
-    // $('input[type=radio][name=choice]').focusout(function() {
-    //     console.log($('input[type=radio][name=choice]:checked'))
-    //     if($(this).parent().hasClass('focus')){
-    //     $(this).parent().removeClass('focus')
-    //     } 
-    // })
 }
 
 
@@ -219,6 +182,7 @@ function startOver() {
         STORE.score = 0;
         STORE.currentQuestion = 0;
         renderPage(startPage);
+        startBtnClick();
 }
 
 //i still have yet to implement the html rendering for the scoring system so users can see their final score, ran short on time to do that
