@@ -24,8 +24,8 @@ let quizPage = `<div class="container quiz-page">
         <div class="feedback"><p></p></div>
             <section class="quiz">
                 <form class="form">
-                        <div class="answers">
-                        </div>
+                        <fieldset class="answers">
+                        </fieldset>
                         <button class="submit-btn" type="submit">SUBMIT</button>
                         <button class="next-btn" type="button">NEXT</button>
                 </form>
@@ -78,10 +78,10 @@ function startQuiz(page) {
 
     // these variables hold HTML to be rendered within the quiz page for each given question
     let question = STORE.questions[i];
-    let answer1 = `<input id="answer1" type="radio" name="choice" tabindex="1" value="${question.answers[0]}"/><label for="answer1">${question.answers[0]}</label>`;
-    let answer2 = `<input id="answer2" type="radio" name="choice" tabindex="2" value="${question.answers[1]}"/><label for="answer2">${question.answers[1]}</label>`;
-    let answer3 = `<input id="answer3" type="radio" name="choice" tabindex="3" value="${question.answers[2]}"/><label for="answer3">${question.answers[2]}</label>`;
-    let answer4 = `<input id="answer4" type="radio" name="choice" tabindex="4" value="${question.answers[3]}"/><label for="answer4">${question.answers[3]}</label>`;
+    let answer1 = `<li><input id="answer1" type="radio" name="choice" value="${question.answers[0]}"/><label for="answer1">${question.answers[0]}</label></li>`;
+    let answer2 = `<li><input id="answer2" type="radio" name="choice" value="${question.answers[1]}"/><label for="answer2">${question.answers[1]}</label></li>`;
+    let answer3 = `<li><input id="answer3" type="radio" name="choice" value="${question.answers[2]}"/><label for="answer3">${question.answers[2]}</label></li>`;
+    let answer4 = `<li><input id="answer4" type="radio" name="choice" value="${question.answers[3]}"/><label for="answer4">${question.answers[3]}</label></li>`;
     let questionName = `<h3 class="question">${question.name}</h3>`;
     let marker = `<span class="question-marker"><h5>question ${STORE.currentQuestion} of ${STORE.questions.length}</h5></span>`;
     let scorer = `<div class="current-score"><h5>score: ${STORE.score}</h5></div>`;
@@ -100,6 +100,8 @@ function startQuiz(page) {
     $("main .quiz").append(correctAnswer);
     checkAnswer();
     nextQuestion();
+    answerChosen();
+    answersFocus();
 }
 
 // logic for checking for right and wrong answers
@@ -140,23 +142,20 @@ function startQuiz(page) {
 // }
 
 function checkAnswer() {
-    $(".answers input").change(function () {
-        let correctAnswer = $(".ca").data("answer");
-        let userAnswer = $(this).val();
         $('.content').on('click', '.submit-btn', (event) => {
             event.preventDefault();
-            if (correctAnswer === userAnswer) {
-                STORE.score++;
-                $('.feedback p').addClass("correct");
-                $(".answers input").prop("disabled", true);
-            } else {
-                $('.feedback p').addClass("incorrect");
-                $(".answers input").prop("disabled", true);
-            };
-        });
-
-    });
-    
+            let correctAnswer = $(".ca").data("answer");
+                let userAnswer = $('input[type=radio][name=choice]:checked').val();
+                console.log(userAnswer)
+                if (correctAnswer === userAnswer) {
+                    STORE.score++;
+                    $('.feedback p').addClass("correct");
+                    $(".answers input").prop("disabled", true);
+                } else {
+                    $('.feedback p').addClass("incorrect");
+                    $(".answers input").prop("disabled", true);
+                };
+        });    
 }
 
 //move to next question 
@@ -169,34 +168,41 @@ function nextQuestion(){
         }
     })
 }
-        
-    
-
-//keyboard functionality for up and down keys and enter 
-    $(document).on('keydown', function (e) {
-        e.preventDefault();
-        // console.log(e.which)
-        var arrow = {up: 38, down: 40};
-      
-        let inputs = $('[name=choice]');
-        switch (e.which) {
-            
-          case arrow.up:
-            break;
-
-          case arrow.down:
 
 
-          //if theres a checked radio, find next one(to find next, know current)
-          //if theres no currently checked radio, check first one           
-          //use find method on LI to find input and check it  
-          // 
-            if($('[name=choice]:checked')[0]){
-                console.log(inputs.indexOf(($('[name=choice]:checked')[0])))
-              }
-            break;
+function answersFocus() {
+    $('input[type=radio][name=choice]').focus(function() {
+        console.log($('input[type=radio][name=choice]:checked'))
+        if(!$('input[type=radio][name=choice]:checked').length){
+        $(this).parent().addClass('checked')
+        $(this).attr('checked', true)
+        } 
+    })
+    // $('input[type=radio][name=choice]').focusout(function() {
+    //     console.log($('input[type=radio][name=choice]:checked'))
+    //     if($(this).parent().hasClass('focus')){
+    //     $(this).parent().removeClass('focus')
+    //     } 
+    // })
+}
+
+
+//changes color of selected answer choice
+function answerChosen(){
+    $('input[type=radio][name=choice]').on('change', ()=>{
+        console.log('did change')
+        let choices = $('input[type=radio][name=choice]')
+        for(let i=0; i<choices.length; i++){
+            if(choices[i].checked){
+                $(choices[i]).parent().addClass('checked')
+        } else {
+            $(choices[i]).parent().removeClass('checked')
         }
-      });
+    }
+    })
+}
+
+
 
 //if a users chooses 7 or more correct, then quiz will render pass page, if not, a fail page
 function checkResult() {
