@@ -116,7 +116,6 @@ function checkAnswer() {
             event.preventDefault();
             let correctAnswer = $(".ca").data("answer");
                 let userAnswer = $('input[type=radio][name=choice]:checked').val();
-                console.log(userAnswer)
                 if (correctAnswer === userAnswer) {
                     STORE.score++;
                     $('.feedback p').addClass("correct");
@@ -131,10 +130,10 @@ function checkAnswer() {
 //move to next question on next button click, after submit button has been clicked
 function nextQuestion(){
     $('.content').on('click', '.next-btn', () => {
-        if ($('.answers input').prop("disabled", true) && STORE.currentQuestion === STORE.questions.length) {
+        if ($('.answers li input').prop("disabled") && STORE.currentQuestion === STORE.questions.length) {
             checkResult();
-        }else if($('.answers input').prop("disabled", true)){
-        startQuiz(quizPage);
+        }else if($('.answers li input').prop("disabled")){
+            startQuiz(quizPage);
         }
     })
 }
